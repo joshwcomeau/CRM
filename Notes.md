@@ -36,5 +36,25 @@ WHY USER STORIES?
 
 Expansion ideas:
 
-> Create a date_created and date_modified state in the contact instance. Update it when edited.
+> When adding contacts, ask for multiple fields. Automatically add a date_created and date_modified fields
+
+> When displaying contacts, skip blank fields.
+
+> When updating contacts, add a sub-menu for WHICH field to update. Automatically update date_modified field
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

@@ -2,6 +2,7 @@ require "./rolodex"
 require "./contact"
 
 class Runner
+  CUSTOMER_FIELDS = ["name","email","notes"]
   def initialize
     @rolodex = Rolodex.new
   end
@@ -18,14 +19,23 @@ class Runner
   end
 
   def add_contact
-    puts "Enter customer name:"
-    name = gets.chomp
-    @rolodex.create_contact(name)
+    customer_data   = []
+    CUSTOMER_FIELDS.each do |field|
+      puts "Enter customer #{field}:"
+      customer_data << gets.chomp
+    end
+
+    if valid_email?( customer_data[1] )
+      @rolodex.create_contact(*customer_data)
+    else
+      puts "Invalid email! Please enter a real email address or leave blank."
+      add_contact
+    end
   end
 
   def show_contacts
     puts "------------------------"
-    puts "> Displaying all contacts:"
+    puts "Displaying all contacts:"
     @rolodex.show_contacts
   end
 
@@ -44,21 +54,21 @@ class Runner
     @rolodex.edit_contact(id, new_name)
   end
 
+  def valid_email?(email)
+    /^[\w][\w\-\.]+@[\w\-]+([\w\-]+\.?)*[\w]{2,6}$/ =~ email
+  end
+
   def run
     done = false
     until done
       main_menu
       input = gets.chomp.to_i
-      if input == 0
-        done = true
-      elsif input == 1
-        add_contact
-      elsif input == 2
-        show_contacts
-      elsif input == 3
-        remove_contact
-      elsif input == 4
-        edit_contact
+
+      if    input == 0 then done = true
+      elsif input == 1 then add_contact
+      elsif input == 2 then show_contacts
+      elsif input == 3 then remove_contact
+      elsif input == 4 then edit_contact
       end
       puts "------------------------"
     end

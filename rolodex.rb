@@ -1,11 +1,15 @@
+
 class Rolodex
   def initialize
     @contacts = []
   end
 
-  def create_contact(name)
+  def create_contact(name, email, notes)
     contact = Contact.new
     contact.name = name.capitalize
+    contact.email = email
+    contact.notes = notes
+
     @contacts << contact
   end
 
