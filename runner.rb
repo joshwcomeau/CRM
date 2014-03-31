@@ -7,6 +7,7 @@ class Runner
   end
 
   def main_menu
+    clear_window
     puts "\n*********************************"
     puts "***   Our Amazing CRM v.0.1   ***"
     puts "***  -----------------------  ***"
@@ -14,6 +15,7 @@ class Runner
     puts "***  ( 2 ) View all contacts  ***"
     puts "***  ( 3 ) Delete a contact   ***"
     puts "***  ( 4 ) Update a contact   ***"
+    puts "***  ( 5 ) Search contacts    ***"
     puts "***  ( 0 ) To Exit            ***"
     puts "*********************************\n\n"
     print "> "
@@ -33,6 +35,7 @@ class Runner
       elsif input == 2 then view_contacts
       elsif input == 3 then delete_contact
       elsif input == 4 then contact_validation
+      elsif input == 5 then search_contacts
       else done = true
       end
 
@@ -40,6 +43,7 @@ class Runner
   end
 
   def add_contact
+    clear_window
     puts "=== Add A Contact ==="
     
     puts "Enter new contact name:"
@@ -70,6 +74,7 @@ class Runner
   end
 
   def view_contacts 
+    clear_window
     puts "=== Showing Contacts ==="
     @rolodex.view_contacts
     puts "> Press 'Enter' to return to the main menu."
@@ -77,6 +82,7 @@ class Runner
   end
 
   def delete_contact
+    clear_window
     puts "=== Delete A Contact ==="
     puts "Enter an ID to delete it, or type '0' to view all contacts instead."
     input = gets.chomp.to_i
@@ -97,6 +103,7 @@ class Runner
   end
 
   def contact_validation
+    clear_window
     puts "=== Update A Contact ==="
     puts "Enter a user ID to select the user to update, or type '0' to view all contacts instead."
     id = gets.chomp.to_i
@@ -129,6 +136,7 @@ class Runner
   end
 
   def update_name(id)
+    clear_window
     puts "Enter the new name for this user:"
     new_name = gets.chomp.capitalize
     @rolodex.update_name(id, new_name)
@@ -138,6 +146,7 @@ class Runner
   end
 
   def update_email(id)
+    clear_window
     puts "Enter the new email for this user:"
     new_email = gets.chomp
     @rolodex.update_email(id, new_email)
@@ -146,6 +155,7 @@ class Runner
   end
 
   def update_notes(id)
+    clear_window
     puts "Do you want to append new notes to this user, or overwrite the current notes with new ones?"
     puts "  ( 1 ) Append"
     puts "  ( 2 ) Overwrite"
@@ -163,6 +173,7 @@ class Runner
   end
 
   def update_more(id)
+    clear_window
     puts "\n\nContact #{id} successfully updated."
     puts "'1' to update more fields on this customer, or 'Enter' to return to the main menu\n"
     update_more = gets.chomp.to_i
@@ -172,6 +183,22 @@ class Runner
 
   def valid_email?(email)
     /^[\w][\w\-\.]+@[\w\-]+([\w\-]+\.?)*[\w]{2,6}$/ =~ email
+  end
+
+  def search_contacts
+    clear_window
+    puts "=== Search Contacts ==="
+    puts "Enter a search term, and we'll return all matching contacts."
+    search_term = gets.chomp
+    clear_window
+    @rolodex.find_contacts(search_term)
+    puts "\n\n'1' to search again, or 'Enter' to return to the main menu\n"
+    input = gets.chomp.to_i
+    search_contacts if input == 1
+  end
+
+  def clear_window
+    system "clear" or system "cls"
   end
 
 

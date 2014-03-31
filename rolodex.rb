@@ -58,6 +58,20 @@ class Rolodex
     contact.modified = Time.new
   end
 
+  def find_contacts(search)
+    matching_contacts = @contacts.select do |c| 
+      puts c.attributes
+      c.attributes.any? { |key, c_field| c_field.include?(search) }
+    end
+
+    if matching_contacts.length != 0
+      puts "===============\nFound the following #{matching_contacts.length} results:"
+      matching_contacts.each { |c| puts c }
+    else
+      puts "Sorry, no results found."
+    end
+  end
+
 
 
 end
